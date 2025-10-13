@@ -20,7 +20,10 @@ defmodule SocialWeb.Router do
   scope "/", SocialWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    get "/", PostController, :index
+    get "/home", PageController, :home
+
+
   end
 
   # Other scopes may use custom stacks.
@@ -59,6 +62,8 @@ defmodule SocialWeb.Router do
     end
 
     post "/users/log_in", UserSessionController, :create
+
+    resources "/posts", PostController, only: [:index, :show]
   end
 
   scope "/", SocialWeb do
@@ -69,6 +74,9 @@ defmodule SocialWeb.Router do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end
+
+
+    resources "/posts", PostController, except: [:index, :show]
   end
 
   scope "/", SocialWeb do
